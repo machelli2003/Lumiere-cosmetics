@@ -1,0 +1,456 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+@config "../../tailwind.config.js";
+
+:root {
+  --ivory: #F9F5F0;
+  --ivory-dark: #F0E9DF;
+  --blush: #D4A5A5;
+  --blush-light: #EDD5D5;
+  --espresso: #2C1810;
+  --espresso-medium: #5C3D2E;
+  --espresso-light: #8B6355;
+  --gold: #C9A96E;
+  --gold-light: #E8D5B0;
+  --sage: #8B9B7A;
+  --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--ivory);
+  color: var(--espresso);
+  margin: 0;
+}
+
+.font-display {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.nav-link {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  position: relative;
+  padding-bottom: 2px;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   EFFECTS & ANIMATIONS
+   ══════════════════════════════════════════════════════════════ */
+
+
+
+
+/* ── Page Transition ─────────────────────────────────────── */
+.page-enter {
+  animation: pageEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Scroll Reveal ───────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 {
+  transition-delay: 0.1s;
+}
+
+.reveal-delay-2 {
+  transition-delay: 0.2s;
+}
+
+.reveal-delay-3 {
+  transition-delay: 0.3s;
+}
+
+.reveal-delay-4 {
+  transition-delay: 0.4s;
+}
+
+.reveal-delay-5 {
+  transition-delay: 0.5s;
+}
+
+.reveal-delay-6 {
+  transition-delay: 0.6s;
+}
+
+/* ── Hero Text Slide In ──────────────────────────────────── */
+.hero-line {
+  overflow: hidden;
+}
+
+.hero-line span {
+  display: block;
+  animation: heroSlide 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--delay, 0s);
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+@keyframes heroSlide {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Skeleton Shimmer ────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(90deg, #F0E9DF 25%, #F9F5F0 50%, #F0E9DF 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ── Product Card Lift ───────────────────────────────────── */
+.product-card {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(44, 24, 16, 0.12);
+}
+
+/* ── Cart Badge Bounce ───────────────────────────────────── */
+@keyframes cartBounce {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  30% {
+    transform: scale(1.5);
+  }
+
+  60% {
+    transform: scale(0.9);
+  }
+}
+
+.cart-badge-bump {
+  animation: cartBounce 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Button Ripple ───────────────────────────────────────── */
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ripple::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(0);
+  border-radius: 50%;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  opacity: 0;
+}
+
+.btn-ripple:active::after {
+  transform: scale(3);
+  opacity: 0;
+  transition: 0s;
+}
+
+/* ── Gold Input Focus Line ───────────────────────────────── */
+.input-luxury {
+  position: relative;
+  border-bottom: 1px solid rgba(201, 169, 110, 0.3);
+  transition: border-color 0.3s ease;
+}
+
+.input-luxury:focus {
+  outline: none;
+  border-bottom-color: #2C1810;
+}
+
+/* ── Staggered Grid Reveal ───────────────────────────────── */
+.grid-stagger>* {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: gridItemIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.grid-stagger>*:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.grid-stagger>*:nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+.grid-stagger>*:nth-child(3) {
+  animation-delay: 0.19s;
+}
+
+.grid-stagger>*:nth-child(4) {
+  animation-delay: 0.26s;
+}
+
+.grid-stagger>*:nth-child(5) {
+  animation-delay: 0.33s;
+}
+
+.grid-stagger>*:nth-child(6) {
+  animation-delay: 0.40s;
+}
+
+.grid-stagger>*:nth-child(7) {
+  animation-delay: 0.47s;
+}
+
+.grid-stagger>*:nth-child(8) {
+  animation-delay: 0.54s;
+}
+
+.grid-stagger>*:nth-child(9) {
+  animation-delay: 0.61s;
+}
+
+.grid-stagger>*:nth-child(10) {
+  animation-delay: 0.68s;
+}
+
+.grid-stagger>*:nth-child(11) {
+  animation-delay: 0.75s;
+}
+
+.grid-stagger>*:nth-child(12) {
+  animation-delay: 0.82s;
+}
+
+@keyframes gridItemIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Flying Cart Animation ───────────────────────────────── */
+.fly-to-cart {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  background: #C9A96E;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9997;
+  animation: flyToCart 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes flyToCart {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  80% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.2) translate(var(--tx), var(--ty));
+  }
+}
+
+/* ── Navbar Scroll Shrink ────────────────────────────────── */
+.navbar-scrolled {
+  box-shadow: 0 2px 20px rgba(44, 24, 16, 0.08);
+  background: rgba(249, 245, 240, 0.98) !important;
+}
+
+/* ── Image Zoom on Hover ─────────────────────────────────── */
+.img-zoom img {
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.img-zoom:hover img {
+  transform: scale(1.07);
+}
+
+/* ── Marquee (for brands) ────────────────────────────────── */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ── Smooth Number Count-Up ──────────────────────────────── */
+.count-up {
+  display: inline-block;
+  animation: countUp 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Cart Sidebar Slide ──────────────────────────────────── */
+.cart-slide-enter {
+  animation: cartSlideIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes cartSlideIn {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* ── Gold shimmer on text ────────────────────────────────── */
+.text-shimmer {
+  background: linear-gradient(90deg, #C9A96E, #E8D5B0, #C9A96E);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: textShimmer 3s linear infinite;
+}
+
+@keyframes textShimmer {
+  0% {
+    background-position: 200% center;
+  }
+
+  100% {
+    background-position: -200% center;
+  }
+}
+
+/* ── Floating label inputs ───────────────────────────────── */
+.form-group {
+  position: relative;
+}
+
+.form-group input:focus+label,
+.form-group input:not(:placeholder-shown)+label {
+  transform: translateY(-20px) scale(0.8);
+  color: #C9A96E;
+}
+
+.form-group label {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+  color: rgba(44, 24, 16, 0.4);
+  transform-origin: left;
+  transition: transform 0.25s ease, color 0.25s ease;
+  pointer-events: none;
+}
+
+/* ── Scrollbar styling ───────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F9F5F0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C9A96E;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2C1810;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #C9A96E #F9F5F0;
+}
+
+/* ── Selection color ─────────────────────────────────────── */
+::selection {
+  background: #C9A96E;
+  color: #2C1810;
+}
+
+/* ── Focus ring ──────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid #C9A96E;
+  outline-offset: 2px;
+}
