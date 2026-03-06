@@ -20,6 +20,8 @@ const adminRoutes = require('./routes/adminRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 
 const app = express();
+// Allow trust proxy (required on platforms like Render so rate-limit can read X-Forwarded-For)
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 5000;
 
 // ─── Connect Database ─────────────────────────────────────────────────────────
@@ -78,6 +80,14 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cookieParser());
 
+// Handle malformed JSON bodies gracefully
+app.use((err, req, res, next) => {
+    if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+        return res.status(400).json({ success: false, message: 'Invalid JSON payload' });
+    }
+    next(err);
+});
+
 // Serve uploaded files
 // Serve uploaded files and allow cross-origin access for frontend (CORP)
 app.use(
@@ -102,6 +112,11 @@ app.get('/api/health', (req, res) => {
         environment: process.env.NODE_ENV,
         version: '1.0.0',
     });
+});
+
+// Root route for platform probes
+app.get('/', (req, res) => {
+    res.json({ success: true, message: 'API is running. Use /api endpoints.' });
 });
 
 // ─── API Routes ───────────────────────────────────────────────────────────────
