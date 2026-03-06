@@ -38,7 +38,7 @@ app.use(
     cors({
         origin: (origin, callback) => {
             // Allow all origins in development or if it matches the CLIENT_URL
-            if (process.env.NODE_ENV === 'development' || !origin || [process.env.CLIENT_URL || 'http://localhost:3000', 'http://localhost:5173'].includes(origin)) {
+            if (process.env.NODE_ENV === 'development' || !origin || [process.env.CLIENT_URL || 'http://localhost:3000', 'http://localhost:5173', 'https://lumiere-cosmetics-1.onrender.com'].includes(origin)) {
                 callback(null, true);
             } else {
                 callback(new Error('Blocked by CORS'));

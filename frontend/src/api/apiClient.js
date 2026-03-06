@@ -1,10 +1,11 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-    baseURL: '/api',
+    baseURL: 'https://lumiere-cosmetics.onrender.com/api',
     headers: {
         'Content-Type': 'application/json'
-    }
+    },
+    withCredentials: true,
 });
 
 // Request Interceptor: Add Token
